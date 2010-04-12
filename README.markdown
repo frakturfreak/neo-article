@@ -2,20 +2,26 @@
 
 ## Purpose
 
-This is the draft for an article about the [Neo keyboard layout](http://neo-layout.org/) for [Die TeXnische Komödie](http://www.dante.de/DTK.html), written in the german language.
+This is the draft for an article about the [Neo keyboard layout](http://neo-layout.org/) for [Die TeXnische Komödie (DTK)](http://www.dante.de/DTK.html), written in the german language.
 
 The main author is [Arno Trautmann](http://github.com/alt/neo-article).
 
 ## How to Compile
 
-To compile, use the makefile:
+## Using the makefile
 
-    latex --shell-escape makefile
+To compile, just execute the makefile:
+
+    xelatex --shell-escape makefile
 
 Insert 1 if you want to compile all files or 2 if you only want to compile the helper files (`ebene*.tex` and `neo*.tex`)
 
-The option `--shell-escape` is needed here! (or compile all of the files ‌`neo*.tex`, `ebene*.tex`, `neo+xelatex.tex` `neo+xelatex.aux` by hand)
+The option `--shell-escape` *is* needed here!
 
-If you want to compile by hand, you have to run `xelatex` on `neo*.tex` and `ebene*.tex` first.
+## By hand
 
-After that, the article can be compiled with `pdflatex neo+xelatex.tex`. For bibliography, you must complement `bibtex neo+xelatex` and recompile the article with `pdflatex neo+xelatex.tex`. (the `.bib` will be generated automatically in the first `neo+xelatex` run.)
+If you want to compile by hand, you have to run `xelatex` on `ebene*.tex` first, afterwards the article can be compiled with `xelatex neo+xelatex.tex`. For bibliography, you must complement `bibtex neo+xelatex` and recompile the article with `xelatex neo+xelatex.tex`. (the `.bib` will be generated automatically in the first `neo+xelatex` run.)
+
+## Other Versions (for pdfLaTeX)
+
+The delivered version for the DTK had to use pdfLaTeX; it can be found unter the [abgabe tag](http://github.com/alt/neo-article/tree/abgabe). A slightly better version *may* be aviable in the `pdflatex` branch.

@@ -1,9 +1,8 @@
 \documentclass[ngerman]{dtk}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
-\usepackage{
+\usepackage{%xltxtra causes a error with a \TeX logo, instead:
+xunicode,
+fontspec,
 babel,
 caption,
 listings,
@@ -24,7 +23,7 @@ xspace
   note = {\url{http://forschung.goebel-consult.de/de-ergo}}
 }
 @Misc{neo2,
-  author	= {Neo Projektseite mit Wiki},
+  author = {Neo Projektseite mit Wiki},
   note= {\url{http://www.neo-layout.org}}
 }
 @Misc{patentdvorak,
@@ -71,6 +70,7 @@ xspace
 \address{Stefan}{Mayer}{\protect\url{mayer@uni-mainz.de}}
 
 \begin{document}
+\setmonofont[Scale=0.8]{DejaVu Sans Mono}
 \maketitle
 \begin{abstract}
 Seit der weiten Verbreitung von \XeTeX\ und der fortschreitenden Nutzbarkeit von \LuaTeX\ ist die  \TeX"=\kern-.5pt Welt in der Zeit der Unicode"=Kodierung und moderner Schrifttechnologien angekommen. Doch das Haupteingabegerät, die Tastatur, ist bei vielen Nutzern größtenteils noch in der Zeit der mechanischen Schreibmaschinen steckengeblieben. In diesem Artikel soll das moderne Tastaturlayout Neo vorgestellt werden, das eine zeitgemäße Arbeit in der Textverarbeitung ermöglicht und vor allem den Umgang mit \LaTeX\ deutlich vereinfachen kann.
@@ -126,7 +126,7 @@ Eine weitere große Zahl mathematischer und sonstiger spezieller Zeichen bietet 
 \subsection{Wie soll ich mir das alles merken?}
 Oft fällt es schon schwer, sich alle normalen Tasten zu merken, vor allem, wenn man eine neue Belegung lernt. Aber dann gleich 6 Zeichen pro Taste?
 
-Hier hilft die sinngemäße Anordnung: Die Taste |a| hat die Zeichen |a A| sowie |{| \includegraphics{neo1}. Vier davon kann man sich phonetisch oder der Glyphe nach merken. Auf den Formel"=Ebenen wurde darauf geachtet, dass die Formelzeichen mnemonisch mit der Buchstabentaste in Bezug stehen.  Die Sonderzeichenebene ordnet die Zeichen nach Sinngruppen; so ist etwa jedes der Zeichenpaare |()<>{}[]›‹‚‘| jeweils mit Zeige"= und Mittelfinger einer Hand in der gleichen Tastenreihe einzugeben.  Die Steuerungsebene schließlich enthält Cursor"= und Ziffernblock in der gewohnten Anordnung, nur eben in der Grundstellung der beiden Hände. (Mit Erweiterungen: links neben der linken Pfeiltaste ist \taste{Pos 1}, also „ganz links“, oberhalb dieser Taste ist \taste{Bild hoch}, also „ganz hoch“ etc.)
+Hier hilft die sinngemäße Anordnung: Die Taste |a| hat die Zeichen |a A| sowie |{ α ⇣ ∀|. Vier davon kann man sich phonetisch oder der Glyphe nach merken. Auf den Formel"=Ebenen wurde darauf geachtet, dass die Formelzeichen mnemonisch mit der Buchstabentaste in Bezug stehen.  Die Sonderzeichenebene ordnet die Zeichen nach Sinngruppen; so ist etwa jedes der Zeichenpaare |()<>{}[]›‹‚‘| jeweils mit Zeige"= und Mittelfinger einer Hand in der gleichen Tastenreihe einzugeben.  Die Steuerungsebene schließlich enthält Cursor"= und Ziffernblock in der gewohnten Anordnung, nur eben in der Grundstellung der beiden Hände. (Mit Erweiterungen: links neben der linken Pfeiltaste ist \taste{Pos 1}, also „ganz links“, oberhalb dieser Taste ist \taste{Bild hoch}, also „ganz hoch“ etc.)
 
 Allgemein wurde versucht, das Layout so zu gestalten, dass es sehr intuitiv verwendet werden kann und man kein „Raketentechniker“ sein muss, um es zu verstehen\footnote{Das Keyboarddesign „Space Cadett“ hatte dieses Problem, aber auf Hardwareseite.} – Neo soll auch im Alltag bestehen können.
 
@@ -138,15 +138,36 @@ Neo ist keine Tastatur, sondern eine Tastatur\kern -.5pt\emph{belegung} und orie
 Optimale Ergebnisse erhält man natürlich durch die Kombination einer ergonomischen Belegung und einer ergonomisch geformten Tastatur, z.\,B. Matrixtastaturen (PLUM) oder Konzepten wie DataHand. \cite{plum,datahand}
 
 \section{Neo, Unicode und \XeLaTeX}
-Der \TeX"=Nutzer wird sich nun fragen, was das mit ihm zu tun hat: Die ganzen Zeichen kann man auch als \TeX"=Befehle über ASCII eingeben, man braucht weder Unicode noch \XeTeX\ und vor allem kein Neo. Das stimmt auch prinzipiell, allerdings wird der Quellcode so ziemlich unleserlich. Wer ein |\"a| schöner findet als ein |ä| im Dokument, zählt nicht direkt zur Zielgruppe dieses Artikels. Deutlich wird die bessere Lesbarkeit vor allem im Formelsatz, der meist nur schlecht auf einen Blick zu erfassen ist. Man vergleiche die beiden folgenden Eingaben:\\ \\
-\verb1 a) \int_{-\infty}^\infty d\Omega \left\|\sqrt{\frac{3}{8\pi}}1
-\verb1                         \sin\theta e^{i\phi}\right\|^2 \geq 01
-\verb| b)| \raisebox{-.8ex}{\includegraphics{neo2}}
-
+Der \TeX"=Nutzer wird sich nun fragen, was das mit ihm zu tun hat: Die ganzen Zeichen kann man auch als \TeX"=Befehle über ASCII eingeben, man braucht weder Unicode noch \XeTeX\ und vor allem kein Neo. Das stimmt auch prinzipiell, allerdings wird der Quellcode so ziemlich unleserlich. Wer ein |\"a| schöner findet als ein |ä| im Dokument, zählt nicht direkt zur Zielgruppe dieses Artikels. Deutlich wird die bessere Lesbarkeit vor allem im Formelsatz, der meist nur schlecht auf einen Blick zu erfassen ist. Man vergleiche die beiden folgenden Eingaben:
+\begin{verbatim}
+  a) \[\int_{-\infty}^\infty d\Omega \left|\sqrt{\frac{3}{8\pi}}
+                          \sin\theta e^{i\phi}\right|^2 \geq 0\]
+  b)∫_{-∞}^∞ dΩ \left|√{\frac{3}{8π}}\sinϑ e^{iφ}\right|² ≥ 0
+\end{verbatim}
+% Für die Ausgabe der Formel mit dem angegeben Code – wir wollen ja nicht schummeln! … Außer ein wenig kerning-Korrektur
+\def\square{^2}
+\catcode`\∫=\active
+\catcode`\Ω=\active
+\catcode`\√=\active
+\catcode`\ϑ=\active
+\catcode`\φ=\active
+\catcode`\π=\active
+\catcode`\²=\active
+\catcode`\≥=\active
+\let∫\int
+\letΩ\Omega
+\let√\sqrt
+\letϑ\theta
+\letφ\phi
+\letπ\pi
+\let²\square
+\let≥\geq
+\def\d{\mathrm{d}}
 Mit wenigen kurzen Definitionen erhält man jeweils das gleiche Resultat:
-\[\textstyle \int_{-\infty}^\infty d\Omega \left\|\sqrt{\frac{3}{8\pi}} \sin\theta e^{i\phi}\right\|^2 \geq 0\]
+\[∫_{-∞}^∞\kern-.6em \d Ω\ \left\|√{\frac{3}{8π}} \sin ϑ e^{iφ}\right\|² ≥ 0\]
+\catcode`\∫=12\catcode`\≥=12 %für die Verwendung in \verb
 
-Zur Zeit muss man noch manuell definieren, dass \raisebox{-.8ex}{\includegraphics{neo3}} wie |\int, \geq| behandelt werden, aber das (noch) experimentelle Paket \Package{unicode-math}\footnote{Von Will Robertson mit Weiterentwicklung für \LuaTeX von Khaled Hosny. \cite{unicode-math}} wird hier Abhilfe schaffen und den direkten Umgang mit unicode"=kodierten otf"=Matheschriften ermöglichen.
+Zur Zeit muss man noch manuell definieren, dass |∫, ≥| wie |\int, \geq| behandelt werden, aber das (noch) experimentelle Paket \Package{unicode-math}\footnote{Von Will Robertson mit Weiterentwicklung für \LuaTeX von Khaled Hosny. \cite{unicode-math}} wird hier Abhilfe schaffen und den direkten Umgang mit unicode"=kodierten otf"=Matheschriften ermöglichen.
 
 Auch für typographisch korrekte Zeichen beim normalen Schreiben bietet Neo – in Kombination mit einem unicodefähigen \TeX"=System wie \XeLaTeX, \LuaLaTeX\ oder \ConTeXt – die Vorteile der direkten Eingabe. Man muss nicht mehr |--| schreiben, um den Halbgeviertstrich oder Gedankenstrich „–“ zu erhalten, sondern kann ihn einfach eingeben, ebenso der Geviertstrich oder englische Gedankenstrich „—“ statt |---|. Auch Anführungszeichen, die man mit \Package{babel} |"` "'| schreiben muss (was die Autoren sich noch nie merken konnten \dots{}), bietet Neo als Zeichen, sowie englische Anführungszeichen und Guillemets: „ “ “ ”  » «. Die Auslassungspunkte, typographisch korrekt mit |\dots| geschrieben, sind ebenso vorhanden: … Mit pdf\TeX\ sind manche dieser Zeichen nutzbar, je nach verwendeter Schrift, allerdings nur mit |utf8|"=Kodierung und Erweiterungen zu \Package{inputenc}.
 
@@ -175,9 +196,9 @@ Das optionale Argument wird dabei wie gewohnt behandelt. Mit etwas mehr Aufwand 
 \subsection{Besonderheiten}
 Zum Abschluss seien ein paar Spezialitäten erwähnt, die Neo im Detail von anderen Belegungen abheben:
 
-In der DTK 3/2008 hat Markus Kohm berichtet, dass das große scharfe S \raisebox{-.4ex}{\includegraphics{neo6}} normiert wurde. Leider gibt es (noch) sehr wenige Schriften (z.\,B. die Linux Libertine), in denen dieses Zeichen vorhanden ist – aber schon lange vor dieser Meldung konnte es mit Neo direkt eingegeben werden.
+In der DTK 3/2008 hat Markus Kohm berichtet, dass das große scharfe S (ẞ) normiert wurde. Leider gibt es (noch) sehr wenige Schriften (z.\,B. die Linux Libertine), in denen dieses Zeichen vorhanden ist – aber schon lange vor dieser Meldung konnte es mit Neo direkt eingegeben werden.
 
-Liebhaber der gebrochenen Schriften kommen auch auf ihre Kosten, da das lange s \raisebox{-.4ex}{\includegraphics{neo4}} ebenfalls in Neo vorhanden ist; mit einer richtig kodierten gebrochenen Schrift kann man also einfach „\raisebox{-.14ex}{\includegraphics{neo5}}“ schreiben – natürlich auch in Antiqua.
+Liebhaber der gebrochenen Schriften kommen auch auf ihre Kosten, da das lange s (ſ) ebenfalls in Neo vorhanden ist; mit einer richtig kodierten gebrochenen Schrift kann man also einfach „deutſch“ schreiben – natürlich auch in Antiqua.
 
 Dank der vielen „toten Tasten“, also diakritischen Zeichen, ist jeder Buchstabe aller europäischen, lateinisch basierten Alphabete, sowie Griechisch schreibbar – optimal für vielsprachigen Satz.
 %\fixme{Weitere Anmerkungen?}
