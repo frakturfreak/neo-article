@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is the draft for an article about the [Neo keyboard layout](http://neo-layout.org/) for [Die TeXnische Komödie (DTK)](http://www.dante.de/DTK.html), written in the german language.
+This is an article about the [Neo keyboard layout](http://neo-layout.org/) and XeLaTeX, written in the german language. It was also published in [Die TeXnische Komödie (DTK 2/2010)](http://www.dante.de/DTK.html), the journal of the german TeX User Group (DANTE).
 
 The main author is [Arno Trautmann](http://github.com/alt/neo-article).
 
@@ -16,7 +16,7 @@ To compile, just execute the makefile:
 
 Insert 1 if you want to compile all files or 2 if you only want to compile the helper files (`ebene*.tex` and `neo*.tex`)
 
-The option `--shell-escape` *is* needed here!
+The option `--shell-escape` *is needed* here!
 
 ## By hand
 
@@ -24,4 +24,4 @@ If you want to compile by hand, you have to run `xelatex` on `ebene*.tex` first,
 
 ## Other Versions (for pdfLaTeX)
 
-The delivered version for the DTK had to use pdfLaTeX; it can be found unter the [abgabe tag](http://github.com/alt/neo-article/tree/abgabe). A slightly better version *may* be aviable in the `pdflatex` branch.
+The actual delivered version for the DTK had to use pdfLaTeX; it can be found unter the [abgabe tag](http://github.com/alt/neo-article/tree/abgabe). A slightly better version *may* be aviable in the `pdflatex` branch.
