@@ -1,8 +1,11 @@
 \documentclass[ngerman]{dtk}
 
-\usepackage{%xltxtra causes a error with a \TeX logo, instead:
-xunicode,
-fontspec,
+\makeatletter% Ein kleiner Hack, da xltxtra sonst einen Fehler verursacht
+  \let\TeX@logo@spacing\relax
+\makeatother
+
+\usepackage{
+xltxtra,
 babel,
 caption,
 listings,
