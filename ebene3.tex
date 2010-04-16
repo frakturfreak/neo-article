@@ -8,7 +8,7 @@
 \begin{preview}
 \fontspec{DejaVu Sans Mono}
 \newcommand{\amod}[1]{{\textbf{{#1}}}}% a pressed modifier
-\drawkeyboard{
+\keyboard[
   basesize = 0.18cm,
   textscale = 1.4,
   thickness = 0.8pt,
@@ -17,7 +17,8 @@
   fillcolor = black!7.5,
   centerhook = \underline,
   homerowhook = \textbf,
-  nonneoglyphhook = {\scriptsize},
+  nonneoglyphhook = {\scriptsize}
+]{
   strgl=Strg,
   osl={},
   altl=Alt,

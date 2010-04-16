@@ -11,7 +11,7 @@
 	\raisebox{-.5ex}{\kern-.5ex #1}%
 	\raisebox{.5ex}{\kern.5ex #2}
 }% Draws two Glyphes onto one key: the second ‘upper right’ of the first
-\drawkeyboard{
+\keyboard[
   basesize = 0.18cm,
   textscale = 0.9,
   thickness = 1pt,
@@ -20,7 +20,8 @@
   fillcolor = black!7.5,
   centerhook = \underline,
   homerowhook = \textbf,
-  nonneoglyphhook = {\footnotesize},
+  nonneoglyphhook = {\footnotesize}
+]{
   strgl=Strg,
   osl={},
   altl=Alt,

@@ -8,7 +8,7 @@ The main author is [Arno Trautmann](http://github.com/alt/neo-article).
 
 ## How to Compile
 
-## Using the makefile
+### Using the makefile
 
 To compile, just execute the makefile:
 
@@ -18,7 +18,7 @@ Insert 1 if you want to compile all files or 2 if you only want to compile the h
 
 The option `--shell-escape` *is needed* here!
 
-## By hand
+### By hand
 
 If you want to compile by hand, you have to run `xelatex` on `ebene*.tex` first, afterwards the article can be compiled with `xelatex neo+xelatex.tex`. For bibliography, you must complement `bibtex neo+xelatex` and recompile the article with `xelatex neo+xelatex.tex`. (the `.bib` will be generated automatically in the first `neo+xelatex` run.)
 

@@ -21,12 +21,16 @@
 \RequirePackage{tikz}
 \RequirePackage{pgfkeys}
 
-\ProvidesPackage{keyboard}
-  [2010/04/05 v0.1e provides keyboards, initial experimental version.]
+\ProvidesPackage{keyboard}[2010/04/14 v0.2a Drawing of keyboard layouts]
+
+
+
+\newif\ifkeyboard@enterisrectangular
+\newif\ifkeyboard@shiftissmall
 
 
 \pgfkeys{
-  /keyboard/.cd,
+  /keyboard/style/.cd,
   thickness/.store in = \keyboard@thickness,
   basesize/.store in = \keyboard@bs,
   textscale/.store in = \keyboard@textscale,
@@ -39,6 +43,12 @@
   centerhook/.store in = \keyboard@hook@c,
   homerowhook/.store in = \keyboard@hook@hr,
   nonneoglyphhook/.store in = \keyboard@hook@nng,
+  rectangularenter/.is if=keyboard@enterisrectangular,
+  smallshift/.is if=keyboard@shiftissmall
+}
+
+\pgfkeys{
+  /keyboard/content/.cd,
   strgl/.store in = \keyboard@strgl,
   osl/.store in = \keyboard@osl,
   altl/.store in = \keyboard@altl,
@@ -103,17 +113,29 @@
   bsp/.store in = \keyboard@bsp
 }
 
-\pgfkeys{
-  /keyboard/.cd,
+
+\pgfkeys{/keyboard/style/default/.style={
   thickness=0.8pt, % the TikZ manual’s definition of thick
   basesize = 0.175cm, % the size of a single quadratic key
   textscale = 1.0, % same size as surrounding text
   color = black,
   fillcolor = black!10,
   drawcolor = black,
+  rectangularenter=false,
+  smallshift=true,
   centerhook = {},
   homerowhook = {},
-  nonneoglyphhook = {},
+  nonneoglyphhook = {}
+}}
+
+\pgfkeys{/keyboard/style/test/.style={
+  /keyboard/style/.cd,
+  fillcolor = green!20,
+  drawcolor = yellow!30!black
+}}
+
+
+\pgfkeys{/keyboard/content/empty/.style={
   strgl={},
   osl={},
   altl={},
@@ -176,7 +198,10 @@
   dash={},
   tii={},
   bsp={}
-}
+}}
+
+\pgfqkeys{/keyboard/style}{default}
+\pgfqkeys{/keyboard/content}{empty}
 
 
 \tikzstyle{keyboardkey}=[line width=\keyboard@thickness, color=\keyboard@drawcolor, fill=\keyboard@fillcolor]
@@ -190,6 +215,7 @@
 }
 
 \newcommand{\keyboard@nkey}[3]{\keyboard@key{#1}{#2}{4}{4}{#3}}
+
 
 \newcommand{\keyboard@ekey}[1]{%
 \filldraw[keyboardkey]
@@ -205,6 +231,7 @@
 
 \newcommand*{\keyboard@apply}{%
 \begin{tikzpicture}
+\begin{scope}
 
 \keyboard@key{3}{2}{6}{4}{\keyboard@hook@nng{\keyboard@strgl}}
 \keyboard@key{8}{2}{4}{4}{\keyboard@hook@nng{\keyboard@osl}}
@@ -216,8 +243,12 @@
 \keyboard@key{53}{2}{6}{4}{\keyboard@hook@nng{\keyboard@menu}}
 \keyboard@key{57.5}{2}{5}{4}{\keyboard@hook@nng{\keyboard@strgr}}
 
+\ifkeyboard@shiftissmall
 \keyboard@key{2.5}{6}{5}{4}{\keyboard@hook@nng{\keyboard@miil}}
 \keyboard@nkey{7}{6}{\keyboard@hook@nng{\keyboard@mivl}}
+\else
+\keyboard@key{4.5}{6}{9}{4}{\keyboard@hook@nng{\keyboard@miil}}
+\fi
 \keyboard@nkey{11}{6}{\keyboard@ue}
 \keyboard@nkey{15}{6}{\keyboard@oe}
 \keyboard@nkey{19}{6}{\keyboard@ae}
@@ -242,8 +273,12 @@
 \keyboard@nkey{41}{10}{\keyboard@hook@hr{\keyboard@t}}
 \keyboard@nkey{45}{10}{\keyboard@hook@hr{\keyboard@d}}
 \keyboard@nkey{49}{10}{\keyboard@y}
+\ifkeyboard@enterisrectangular
+\keyboard@key{55.5}{10}{9}{4}{\keyboard@hook@nng{\keyboard@enter}}
+\else
 \keyboard@nkey{53}{10}{\keyboard@hook@nng{\keyboard@miiir}}
 \keyboard@ekey{\keyboard@hook@nng{\keyboard@enter}}
+\fi
 
 \keyboard@key{3}{14}{6}{4}{\keyboard@hook@nng{\keyboard@tab}}
 \keyboard@nkey{8}{14}{\keyboard@x}
@@ -257,7 +292,12 @@
 \keyboard@nkey{40}{14}{\keyboard@f}
 \keyboard@nkey{44}{14}{\keyboard@q}
 \keyboard@nkey{48}{14}{\keyboard@sz}
+\ifkeyboard@enterisrectangular
 \keyboard@nkey{52}{14}{\keyboard@hook@nng{\keyboard@tiii}}
+\keyboard@key{57}{14}{6}{4}{\keyboard@hook@nng{\keyboard@miiir}}
+\else
+\keyboard@nkey{52}{14}{\keyboard@hook@nng{\keyboard@tiii}}
+\fi
 
 \keyboard@nkey{2}{18}{\keyboard@hook@nng{\keyboard@ti}}
 \keyboard@nkey{6}{18}{\keyboard@ni}
@@ -274,13 +314,22 @@
 \keyboard@nkey{50}{18}{\keyboard@hook@nng{\keyboard@tii}}
 \keyboard@key{56}{18}{8}{4}{\keyboard@hook@nng{\keyboard@bsp}}
 
+\end{scope}
 \end{tikzpicture}
 }
 
 
-\newcommand*{\drawkeyboard}[1]{%
-  \pgfqkeys{/keyboard}{#1}
+
+\newcommand*{\keyboard}[2][]{
+  \pgfqkeys{/keyboard/style}{#1}
+  \pgfqkeys{/keyboard/content}{#2}
   \keyboard@apply
+}
+
+\newcommand*{\drawkeyboard}[1]{%
+  \PackageWarning{keyboard}%
+  {The command drawkeyboard is not longer offered!}%
+  {Use keyboard instead and read the manual!}%
 }
 
 %% 
