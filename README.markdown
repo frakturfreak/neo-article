@@ -24,4 +24,4 @@ If you want to compile by hand, you have to run `xelatex` on `ebene*.tex` first,
 
 ## Other Versions (for pdfLaTeX)
 
-The actual delivered version for the DTK had to use pdfLaTeX; it can be found unter the [abgabe tag](http://github.com/alt/neo-article/tree/abgabe). A slightly better version *may* be aviable in the [`pdflatex` branch](http://github.com/zephyr/neo-article/tree/pdflatex).
+The actual delivered version for the DTK had to use pdfLaTeX; it can be found unter the [abgabe tag](/tree/abgabe). A slightly better version *may* be aviable in the [`pdflatex` branch](/tree/pdflatex).
